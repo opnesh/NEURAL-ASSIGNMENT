@@ -21,12 +21,7 @@ __main    FUNCTION
 
 ;values accorfing to data given in python file
 
-AND	BL printMsg1
-	VLDR.F32 S7,=-0.1  
-	VLDR.F32 S8,=0.2
-	VLDR.F32 S9,=0.2
-	VLDR.F32 S10,=-0.2
-	B compute
+
 		
 OR	BL printMsg2
 	VLDR.F32 S7,=-0.1  
@@ -34,11 +29,25 @@ OR	BL printMsg2
 	VLDR.F32 S9,=0.7
 	VLDR.F32 S10,=-0.1
 	B compute
+	
+AND	BL printMsg1
+	VLDR.F32 S7,=-0.1  
+	VLDR.F32 S8,=0.2
+	VLDR.F32 S9,=0.2
+	VLDR.F32 S10,=-0.2
+	B compute
 		
 NOT	BL printMsg3
 	VLDR.F32 S7,=0.5  
 	VLDR.F32 S8,=-0.7
 	VLDR.F32 S9,=0
+	VLDR.F32 S10,=0.1
+	B compute
+			
+NOR	BL printMsg5
+	VLDR.F32 S7,=0.5  
+	VLDR.F32 S8,=-0.7
+	VLDR.F32 S9,=-0.7
 	VLDR.F32 S10,=0.1
 	B compute
 		
@@ -48,13 +57,7 @@ NAND	BL printMsg4
 	VLDR.F32 S9,=-0.8
 	VLDR.F32 S10,=0.3
 	B compute
-		
-NOR	BL printMsg5
-	VLDR.F32 S7,=0.5  
-	VLDR.F32 S8,=-0.7
-	VLDR.F32 S9,=-0.7
-	VLDR.F32 S10,=0.1
-	B compute
+
 		
 		
 compute	BL Set1
@@ -112,11 +115,11 @@ WEIGHT				VMUL.F32 S19,S7,S16;
 					VADD.F32 S22, S22, S10; 		
 					B exp
 				
-exp   CMP R4,R5; 	Compare i and n 
-      BLE repeat; 	if i is less than n jump to repeat
-      B sigmoid;		else jump to sigmoid 
+exp   CMP R4,R5; 	Comparing I and n
+      BLE repeat; 	If I is less than we will go to repeat else jump to sigmoid
+      B sigmoid;		
 		
-repeat  VMUL.F32 S1,S1,S22; temp = temp*x
+repeat  VMUL.F32 S1,S1,S22; a = a*x
 		VMOV.F32 S3,S1;
 		VMOV.F32 S5,R4; 	
 		VCVT.F32.S32 S5, S5;	
